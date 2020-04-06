@@ -4,9 +4,27 @@ service: klarna-serverless
 app: klarna-serverless-app
 org: naeemfrt
 
+custom:
+  stage: ${opt:stage, self:provider.stage}
+  settings:
+    dev:
+      STAGE: ${self:custom.stage}
+      ENV: 'develop'    
+    prd:
+      STAGE: ${self:custom.stage}
+      ENV: 'production'      
+
+package:
+  individually: true
+  exclude:
+    - ./**
+    
 provider:
   name: aws
   runtime: python3.7
+  region: ap-southeast-1
+  timeout: 30
+  environment: ${self:custom.settings.${self:custom.stage}}
 
 functions:
   hello:
