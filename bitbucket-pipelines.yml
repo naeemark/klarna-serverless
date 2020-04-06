@@ -18,9 +18,19 @@ definitions:
           - nosetests -sv --with-xunit --xunit-file=nosetests.xml --with-xcoverage --xcoverage-file=coverage.xml --cover-package=src --cover-branches
         artifacts:
           - coverage.xml
-          - nosetests.xml    
+          - nosetests.xml
+
+    - step: &sonar-scan
+        image: naeemark/sonar-scanner:latest
+        name: Sonar -> Analyse, Push 
+        script:
+          - export SONAR_URL=$SONAR_URL
+          - export SONAR_TOKEN=$SONAR_TOKEN
+          - export SONAR_ANALYSIS_MODE=publish
+          - bitbucket-sonar-scanner
 
 pipelines:
   branches:
     develop:
-      - step: *build-test      
+      - step: *build-test
+      - step: *sonar-scan
