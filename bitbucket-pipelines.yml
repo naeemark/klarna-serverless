@@ -1,0 +1,26 @@
+definitions:
+  caches:
+      yarncustom: /root/.yarn-cache
+  steps:
+
+    - step: &build-test
+        name: Build and Test
+        image: python:3.7.3
+        caches:
+          - pip
+        script:
+          - pip install virtualenv
+
+          - virtualenv venv
+          - source venv/bin/activate
+          - pip install -r requirements.txt
+
+          - nosetests -sv --with-xunit --xunit-file=nosetests.xml --with-xcoverage --xcoverage-file=coverage.xml --cover-package=src --cover-branches
+        artifacts:
+          - coverage.xml
+          - nosetests.xml    
+
+pipelines:
+  branches:
+    develop:
+      - step: *build-test      
