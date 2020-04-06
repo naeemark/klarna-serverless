@@ -34,16 +34,37 @@ definitions:
           - node
           - yarncustom
         image: naeemark/node-awscli:latest
-        name: deploy-dev
+        name: Deploy -> Dev
         script:
           - apk add python3
           - yarn add serverless --dev
-          # - node_modules/.bin/sls config credentials --stage dev --provider aws --key ${AWS_ACCESS_KEY_ID} --secret ${AWS_SECRET_ACCESS_KEY}
           - node_modules/.bin/sls deploy --stage dev
+
+    - step: &deploy-prod
+        caches:
+          - node
+          - yarncustom
+        image: naeemark/node-awscli:latest
+        name: Deploy -> Prod
+        trigger: manual
+        script:
+          - apk add python3
+          - yarn add serverless --dev
+          - node_modules/.bin/sls deploy --stage prod
 
 pipelines:
   branches:
     develop:
       - step: *build-test
-      # - step: *sonar-scan
+      - step: *sonar-scan
       - step: *deploy-dev
+    master:
+      - step: *build-test
+      - step: *sonar-scan
+      - step: *deploy-prod
+
+  tags:
+    v*:
+      - step: *build-test
+      - step: *sonar-scan
+      - step: *deploy-prod
