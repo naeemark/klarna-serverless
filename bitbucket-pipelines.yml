@@ -38,8 +38,7 @@ definitions:
         script:
           - apk add python3
           - yarn add serverless --dev
-          - node_modules/.bin/sls version
-          - node_modules/.bin/sls config credentials --stage dev --provider aws --key ${AWS_ACCESS_KEY_ID} --secret ${AWS_SECRET_ACCESS_KEY}
+          # - node_modules/.bin/sls config credentials --stage dev --provider aws --key ${AWS_ACCESS_KEY_ID} --secret ${AWS_SECRET_ACCESS_KEY}
           - node_modules/.bin/sls deploy --stage dev
 
 pipelines:
