@@ -29,8 +29,20 @@ definitions:
           - export SONAR_ANALYSIS_MODE=publish
           - bitbucket-sonar-scanner
 
+    - step: &deploy-dev
+        caches:
+          - node
+          - yarncustom
+        image: naeemark/node-awscli:latest
+        name: deploy-dev
+        script:
+          - apk add python3
+          - yarn add serverless --dev
+          - node_modules/.bin/sls deploy --stage dev
+
 pipelines:
   branches:
     develop:
       - step: *build-test
       - step: *sonar-scan
+      - step: *deploy-dev
