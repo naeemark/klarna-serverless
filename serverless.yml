@@ -29,6 +29,9 @@ provider:
 functions:
   hello:
     handler: src/handler.hello
+    package:
+      include:
+        - src/**
     tracing: true
     events:
       - http:
