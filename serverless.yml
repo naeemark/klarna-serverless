@@ -38,3 +38,18 @@ functions:
           method: get
           path: api/v1/hello
           cors: true
+
+  fibonacciV1:
+    handler: src/v1/fibonacci/lambda_function.lambda_handler
+    name: ${self:custom.project}-${self:custom.stage}-fibonacciV1
+    package:
+      include:
+        - src/v1/fibonacci/**
+    tracing: true
+    events:
+      - http:
+          method: get
+          path: api/v1/fibonacci
+          cors: true
+
+
