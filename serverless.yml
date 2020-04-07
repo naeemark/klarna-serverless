@@ -45,6 +45,7 @@ functions:
     package:
       include:
         - src/v1/fibonacci/**
+        - src/common/**
     tracing: true
     events:
       - http:
