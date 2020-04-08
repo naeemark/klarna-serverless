@@ -69,7 +69,13 @@ def calculate_fibonacci(n):
     '''
     a, b = 1, 1
     fibs = [a, b]
-    for i in range(n-2):
+    if n == 1:
+        return [1]
+    if n == 2:
+        return fibs
+
+    for _ in range(n-2):
         a, b = b, b+a
         fibs.append(b)
+
     return fibs
