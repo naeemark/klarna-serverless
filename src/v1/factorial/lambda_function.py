@@ -5,7 +5,7 @@ import src.common.response_builder as response_builder
 
 logger = common_utils.get_logger()
 
-SERVICE_NAME = 'KlarnaServerless-Fibonacci'
+SERVICE_NAME = 'KlarnaServerless-Factorial'
 
 
 def lambda_handler(event, context):
@@ -16,8 +16,8 @@ def lambda_handler(event, context):
         # if input is not valid, throw error and return error response
         is_input_valid(param_n)
 
-        # else Calculate Fibonacci Series
-        response_data = get_fibonacci_response_data(param_n)
+        # else Calculate Factorial
+        response_data = get_factorial_response_data(param_n)
         response = response_builder.get_success_response(
             status_code=200,
             message=SERVICE_NAME,
@@ -35,23 +35,20 @@ def lambda_handler(event, context):
 def is_input_valid(input=None):
     ''' 
         Validates if the input is correct
-        Can also be done by raising an Error
     '''
-    if not str(input).isdigit():
-        raise ValueError()
-    elif int(input) <= 0:
+    if not str(input).isdigit() or int(input) < 0:
         raise ValueError()
     else:
         return True
 
 
-def get_fibonacci_response_data(param_n):
+def get_factorial_response_data(param_n):
     ''' 
-        Prepares response series along with time constraint values 
+        Prepares response series along with time consumed
     '''
     start = datetime.datetime.utcnow().timestamp()
     n = int(param_n)
-    series = calculate_fibonacci(n)
+    factorial = calculate_factorial(n)
     end = datetime.datetime.utcnow().timestamp()
 
     # converting the difference to milliseconds
@@ -59,27 +56,20 @@ def get_fibonacci_response_data(param_n):
 
     response_data = {
         "n": n,
-        "fibonacciSeries": series,
-        "totalElements": len(series),
+        "factorial": factorial,
         "timeTakenMillis": round(time_taken, 3)
     }
     return response_data
 
 
-def calculate_fibonacci(n):
+def calculate_factorial(n):
     ''' 
-        Calculates Fibonacci Series
-        Assumed that the F0 is not required 
+        Calculates Factorial of given N i.e:
+        n!= n x (n-1) x (n-2) x (n-3) x ... x 3 x 2 x 1
     '''
-    a, b = 1, 1
-    fibs = [a, b]
-    if n == 1:
-        return [1]
-    if n == 2:
-        return fibs
+    factorial = 1
+    if n > 0:
+        for i in range(1, n + 1):
+            factorial = factorial*i
 
-    for _ in range(n-2):
-        a, b = b, b+a
-        fibs.append(b)
-
-    return fibs
+    return factorial
