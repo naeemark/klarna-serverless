@@ -53,4 +53,18 @@ functions:
           path: api/v1/fibonacci
           cors: true
 
+  factorialV1:
+    handler: src/v1/factorial/lambda_function.lambda_handler
+    name: ${self:custom.project}-${self:custom.stage}-factorialV1
+    package:
+      include:
+        - src/v1/factorial/**
+        - src/common/**
+    tracing: true
+    events:
+      - http:
+          method: get
+          path: api/v1/factorial
+          cors: true
+
 
