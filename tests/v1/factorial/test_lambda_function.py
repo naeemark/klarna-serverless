@@ -22,6 +22,11 @@ def test_is_input_valid_false():
     is_input_valid(-1)
 
 
+@raises(ValueError)
+def test_is_input_valid_false():
+    is_input_valid("-5")
+
+
 def test_is_input_valid_true():
     flag = is_input_valid(5)
     assert flag is True

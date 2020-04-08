@@ -36,9 +36,7 @@ def is_input_valid(input=None):
     ''' 
         Validates if the input is correct
     '''
-    if not str(input).isdigit():
-        raise ValueError()
-    elif int(input) < 0:
+    if not str(input).isdigit() or int(input) < 0:
         raise ValueError()
     else:
         return True

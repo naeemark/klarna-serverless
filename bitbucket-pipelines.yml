@@ -56,7 +56,6 @@ pipelines:
   branches:
     develop:
       - step: *build-test
-      - step: *sonar-scan
       - step: *deploy-dev
     master:
       - step: *build-test
