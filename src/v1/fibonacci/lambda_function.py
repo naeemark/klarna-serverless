@@ -11,18 +11,20 @@ def lambda_handler(event, context):
         logger.info(event)
         param_n = str(event['queryStringParameters']['n'])
 
-        # if input is not valid, return error response
-        if not is_input_valid(param_n):
-            response = response_builder.get_error_response(status_code=400)
-        # Calculate Fibonacci Series
-        else:
-            response_data = get_fibonacci_response_data(param_n)
-            response = response_builder.get_success_response(
-                status_code=200,
-                message='Fibonacci Series',
-                data=response_data
-            )
-    except (IOError, ValueError, KeyError, TimeoutError, Exception) as err:
+        # if input is not valid, throw error and return error response
+        is_input_valid(param_n)
+
+        # else Calculate Fibonacci Series
+        response_data = get_fibonacci_response_data(param_n)
+        response = response_builder.get_success_response(
+            status_code=200,
+            message='Fibonacci Series',
+            data=response_data
+        )
+    except (ValueError) as err:
+        logger.error(err)
+        response = response_builder.get_error_response(status_code=400)
+    except (KeyError, IOError, TimeoutError, Exception) as err:
         logger.error(err)
         response = response_builder.get_error_response()
     return response
@@ -34,9 +36,9 @@ def is_input_valid(input=None):
         Can also be done by raising an Error
     '''
     if not str(input).isdigit():
-        return False
+        raise ValueError()
     elif int(input) <= 0:
-        return False
+        raise ValueError()
     else:
         return True
 
