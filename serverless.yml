@@ -67,4 +67,18 @@ functions:
           path: api/v1/factorial
           cors: true
 
+  ackermannV1:
+    handler: src/v1/ackermann/lambda_function.lambda_handler
+    name: ${self:custom.project}-${self:custom.stage}-ackermannV1
+    package:
+      include:
+        - src/v1/ackermann/**
+        - src/common/**
+    tracing: true
+    events:
+      - http:
+          method: get
+          path: api/v1/ackermann
+          cors: true
+
 

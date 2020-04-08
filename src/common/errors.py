@@ -9,8 +9,7 @@ error_default = {
             'errors': {
                 'errorCode': 'UNCAUGHT',
                 'errorTitle': 'We seem to have a problem!',
-                'errorDescription': 'Our internal system is having problem, please contact our administrator!',
-                'errorDebugDescription': 'Something bad happened!'
+                'errorDescription': 'Our internal system is having problem, please contact our administrator!'
             }
         }
     })
@@ -25,8 +24,7 @@ error_not_found_404 = {
             'errors': {
                 'errorCode': 'NOT_FOUND',
                 'errorTitle': 'Resource not found',
-                'errorDescription': 'Seems the object which you are trying to find is not available',
-                'errorDebugDescription': 'Resource type is not valid'
+                'errorDescription': 'Seems the object which you are trying to find is not available'
             }
         }
     })
@@ -41,8 +39,22 @@ error_bad_request_400 = {
             'error': {
                 'errorCode': 'VALIDATION_ERROR',
                 'errorTitle': 'Invalid Parameters provided',
-                'errorDescription': 'Seems the provided input is not validated by the system',
-                'errorDebugDescription': 'Invalid params'
+                'errorDescription': 'Seems the provided input is not validated by the system'
+            }
+        }
+    })
+}
+
+error_unprocessable_422 = {
+    'statusCode': 422,
+    'body': json.dumps({
+        'responseCode': 422,
+        'responseMessage': 'UNPROCESSABLE ENTITY',
+        'response': {
+            'error': {
+                'errorCode': 'UNPROCESSABLE_ENTITY',
+                'errorTitle': 'Too much processing required',
+                'errorDescription': 'Seems that maximum recursion depth exceeded in comparison. Please use lower values i.e m=2, n=2'
             }
         }
     })
@@ -53,6 +65,7 @@ def get_error(status_code):
     errors = {
         400: error_bad_request_400,
         404: error_not_found_404,
+        422: error_unprocessable_422,
     }
     if status_code in errors:
         return errors.get(status_code)
