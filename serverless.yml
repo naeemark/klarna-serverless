@@ -26,19 +26,6 @@ provider:
   environment: ${self:custom.settings.${self:custom.stage}}
 
 functions:
-  helloV1:
-    handler: src/handler.hello
-    name: ${self:custom.project}-${self:custom.stage}-helloV1
-    package:
-      include:
-        - src/**
-    tracing: true
-    events:
-      - http:
-          method: get
-          path: api/v1/hello
-          cors: true
-
   fibonacciV1:
     handler: src/v1/fibonacci/lambda_function.lambda_handler
     name: ${self:custom.project}-${self:custom.stage}-fibonacciV1
