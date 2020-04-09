@@ -73,7 +73,7 @@ functions:
     name: ${self:custom.project}-${self:custom.stage}-factorialV2
     package:
       include:
-        - src/v1/factorial/**
+        - src/v2/factorial/**
         - src/common/**
     tracing: true
     events:
