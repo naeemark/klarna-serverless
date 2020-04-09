@@ -35,6 +35,7 @@ definitions:
           - yarncustom
         image: naeemark/node-awscli:latest
         name: Deploy -> Dev
+        deployment: dev
         script:
           - apk add python3
           - yarn add serverless --dev
@@ -47,28 +48,25 @@ definitions:
         image: naeemark/node-awscli:latest
         name: Deploy -> Prod
         trigger: manual
+        deployment: prod
         script:
           - apk add python3
           - yarn add serverless --dev
           - node_modules/.bin/sls deploy --stage prod
 
+# Disabling to avoid unnecessary build executions via free tier
 pipelines:
   branches:
-    develop:
-      - step:
-          name: Deploy Dev
-          deployment: dev
-          script:
-            - echo "Deploy Dev"
-    master:
-      - step:
-          name: Deploy Prod
-          deployment: prod
-          script:
-            - echo "Deploy Prod"
+    # develop:
+    #   - step: *build-test
+    #   - step: *deploy-dev
+    # master:
+    #   - step: *build-test
+    #   - step: *sonar-scan
+    #   - step: *deploy-prod
 
   tags:
-    v*:
-      - step: *build-test
-      - step: *sonar-scan
-      - step: *deploy-prod
+    # v*:
+    #   - step: *build-test
+    #   - step: *sonar-scan
+    #   - step: *deploy-prod
