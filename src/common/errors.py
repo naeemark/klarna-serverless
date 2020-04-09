@@ -54,7 +54,7 @@ error_unprocessable_422 = {
             'error': {
                 'errorCode': 'UNPROCESSABLE_ENTITY',
                 'errorTitle': 'Too much processing required',
-                'errorDescription': 'Seems that maximum recursion depth exceeded in comparison. Please use lower values i.e m=2, n=2'
+                'errorDescription': 'Seems that maximum recursion depth exceeded in comparison. Please use lower values.'
             }
         }
     })

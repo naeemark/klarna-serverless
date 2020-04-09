@@ -1,5 +1,5 @@
 from nose.tools import *
-from src.v1.fibonacci.lambda_function import lambda_handler, is_input_valid, calculate_fibonacci
+from src.v2.fibonacci.lambda_function import lambda_handler, is_input_valid, calculate_fibonacci
 
 
 def test_lambda_handler_400():
@@ -18,13 +18,13 @@ def test_lambda_handler_500():
 
 
 @raises(ValueError)
-def test_is_input_valid_false():
+def test_is_input_valid_false_0():
     is_input_valid(0)
 
 
 @raises(RecursionError)
 def test_is_input_valid_false_max():
-    is_input_valid(50)
+    is_input_valid(100001)
 
 
 def test_is_input_valid_true():

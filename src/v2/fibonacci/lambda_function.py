@@ -16,7 +16,7 @@ def lambda_handler(event, context):
         # if input is not valid, throw error and return error response
         is_input_valid(param_n)
 
-        # else Calculate Fibonacci
+        # else Calculate Fibonacci Series
         response_data = get_fibonacci_response_data(param_n)
         response = response_builder.get_success_response(
             status_code=200,
@@ -44,7 +44,7 @@ def is_input_valid(input=None):
         raise ValueError()
     elif int(input) <= 0:
         raise ValueError()
-    elif int(input) > 30:
+    elif int(input) > 100000:
         raise RecursionError()
     else:
         return True
@@ -52,7 +52,7 @@ def is_input_valid(input=None):
 
 def get_fibonacci_response_data(param_n):
     ''' 
-        Prepares response along with time constraint values 
+        Prepares response series along with time constraint values 
     '''
     start = datetime.datetime.utcnow().timestamp()
     n = int(param_n)
@@ -75,7 +75,11 @@ def calculate_fibonacci(n):
         Calculates Fibonacci Series
         Assumed that the F0 is not required 
     '''
+    a, b = 1, 1
     if n == 1 or n == 2:
-        return 1
-    else:
-        return calculate_fibonacci(n-1)+calculate_fibonacci(n-2)
+        return b
+
+    for _ in range(n-2):
+        a, b = b, b+a
+
+    return b
