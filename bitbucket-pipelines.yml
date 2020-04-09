@@ -55,12 +55,17 @@ definitions:
 pipelines:
   branches:
     develop:
-      - step: *build-test
-      - step: *deploy-dev
+      - step:
+          name: Deploy Dev
+          deployment: dev
+          script:
+            - echo "Deploy Dev"
     master:
-      - step: *build-test
-      - step: *sonar-scan
-      - step: *deploy-prod
+      - step:
+          name: Deploy Prod
+          deployment: prod
+          script:
+            - echo "Deploy Prod"
 
   tags:
     v*:
