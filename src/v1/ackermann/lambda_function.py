@@ -27,10 +27,10 @@ def lambda_handler(event, context):
     except (ValueError) as err:
         logger.error(err)
         response = response_builder.get_error_response(status_code=400)
-    except (RecursionError) as err:
+    except (RecursionError) as err:  # pragma: no cover
         logger.error(err)
         response = response_builder.get_error_response(status_code=422)
-    except (KeyError, IOError, TimeoutError, Exception) as err:
+    except (KeyError, IOError, TimeoutError, Exception) as err:  # pragma: no cover
         logger.error(err)
         response = response_builder.get_error_response()
     return response

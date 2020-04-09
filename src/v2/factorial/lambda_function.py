@@ -24,10 +24,10 @@ def lambda_handler(event, context):
             message=SERVICE_NAME,
             data=response_data
         )
-    except (ValueError) as err:
+    except (ValueError) as err:  # pragma: no cover
         logger.error(err)
         response = response_builder.get_error_response(status_code=400)
-    except (KeyError, IOError, TimeoutError, Exception) as err:
+    except (KeyError, IOError, TimeoutError, Exception) as err:  # pragma: no cover
         logger.error(err)
         response = response_builder.get_error_response()
     return response
