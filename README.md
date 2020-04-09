@@ -2,6 +2,12 @@
 
 Demonstration of Requirements understanding, proposing a solution and implementation by using the latest tools and techniques.
 
+----
+- _Original repository can be found at [klarna-serverless@bitbucket](https://bitbucket.org/naeem__astro/klarna-serverless/)_
+- _[Bitbucket Pipelines](https://bitbucket.org/naeem__astro/klarna-serverless/addon/pipelines/home)_
+- _[Bitbucket Deployments](https://bitbucket.org/naeem__astro/klarna-serverless/addon/pipelines/deployments)_
+----
+
 
 ### What is this repository for? ###
 
