@@ -67,5 +67,6 @@ def calculate_factorial(n):
     ''' 
         Calculates Factorial of given N i.e:
         n!= n x (n-1) x (n-2) x (n-3) x ... x 3 x 2 x 1
+        Using Python math package
     '''
     return math.factorial(n)
