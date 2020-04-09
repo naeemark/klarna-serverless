@@ -1,11 +1,12 @@
 import datetime
+import math
 import json
 import src.common.utils as common_utils
 import src.common.response_builder as response_builder
 
 logger = common_utils.get_logger()
 
-SERVICE_NAME = 'KlarnaServerless-Fibonacci'
+SERVICE_NAME = 'KlarnaServerless-Factorial'
 
 
 def lambda_handler(event, context):
@@ -16,8 +17,8 @@ def lambda_handler(event, context):
         # if input is not valid, throw error and return error response
         is_input_valid(param_n)
 
-        # else Calculate Fibonacci
-        response_data = get_fibonacci_response_data(param_n)
+        # else Calculate Factorial
+        response_data = get_factorial_response_data(param_n)
         response = response_builder.get_success_response(
             status_code=200,
             message=SERVICE_NAME,
@@ -26,9 +27,6 @@ def lambda_handler(event, context):
     except (ValueError) as err:
         logger.error(err)
         response = response_builder.get_error_response(status_code=400)
-    except (RecursionError) as err:
-        logger.error(err)
-        response = response_builder.get_error_response(status_code=422)
     except (KeyError, IOError, TimeoutError, Exception) as err:
         logger.error(err)
         response = response_builder.get_error_response()
@@ -38,25 +36,20 @@ def lambda_handler(event, context):
 def is_input_valid(input=None):
     ''' 
         Validates if the input is correct
-        Can also be done by raising an Error
     '''
-    if not str(input).isdigit():
+    if not str(input).isdigit() or int(input) < 0:
         raise ValueError()
-    elif int(input) <= 0:
-        raise ValueError()
-    elif int(input) > 30:
-        raise RecursionError()
     else:
         return True
 
 
-def get_fibonacci_response_data(param_n):
+def get_factorial_response_data(param_n):
     ''' 
-        Prepares response along with time constraint values 
+        Prepares response series along with time consumed
     '''
     start = datetime.datetime.utcnow().timestamp()
     n = int(param_n)
-    f_of_n = calculate_fibonacci(n)
+    factorial = calculate_factorial(n)
     end = datetime.datetime.utcnow().timestamp()
 
     # converting the difference to milliseconds
@@ -64,18 +57,16 @@ def get_fibonacci_response_data(param_n):
 
     response_data = {
         "n": n,
-        "F(n)": f_of_n,
+        "factorial": factorial,
         "timeTakenMillis": round(time_taken, 3)
     }
     return response_data
 
 
-def calculate_fibonacci(n):
+def calculate_factorial(n):
     ''' 
-        Calculates Fibonacci Series
-        Assumed that the F0 is not required 
+        Calculates Factorial of given N i.e:
+        n!= n x (n-1) x (n-2) x (n-3) x ... x 3 x 2 x 1
+        Using Python math package
     '''
-    if n == 1 or n == 2:
-        return 1
-    else:
-        return calculate_fibonacci(n-1)+calculate_fibonacci(n-2)
+    return math.factorial(n)
