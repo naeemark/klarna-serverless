@@ -24,6 +24,7 @@ Demonstration of Requirements understanding, proposing a solution and implementa
 
 ### Deployment:
 - The deployment will be done using [Bitbucket-Pipelines](https://bitbucket.org/product/features/pipelines)
+
 ![Deployment](screenshots/slsdeploy.png)
 
 ### Development Cycle:
@@ -60,6 +61,8 @@ To set-up the project locally you need to clone this repo, from `master` or `dev
 - Activate Virtual Environment `venv/bin/activate` 
 - Install dependencies `pip install -r requirements.txt`   
 - Run `nosetests -sv --with-xunit --xunit-file=nosetests.xml --with-xcoverage --xcoverage-file=coverage.xml --cover-package=src --cover-branches` to see the unit test execution report
+- Local lambda invoke `sls invoke local -f factorialV1 -p .test_events/factorial.json`
+- Deploy changes directly from local: `sls deploy`
 
 
 ### Configuration ###
